@@ -1,4 +1,4 @@
-package training.taylor.timetracker.core;
+/*package training.taylor.timetracker.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,5 +40,56 @@ public class Tracker {
         }
 
         return entries.get(index);
+    }
+}*/
+
+
+
+
+
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Scanner;
+
+public class TimeTracker {
+    private Instant startTime;
+    private Instant stopTime;
+
+    public void startTimer() {
+        startTime = Instant.now();
+        System.out.println("Timer started.");
+    }
+
+    public void stopTimer() {
+        stopTime = Instant.now();
+        System.out.println("Timer stopped.");
+    }
+
+    public void calculateElapsedTime() {
+        if (startTime != null && stopTime != null) {
+            Duration duration = Duration.between(startTime, stopTime);
+            long seconds = duration.getSeconds();
+            long minutes = seconds / 60;
+            long remainingSeconds = seconds % 60;
+            System.out.println("Elapsed time: " + minutes + " minutes and " + remainingSeconds + " seconds.");
+        } else {
+            System.out.println("Timer has not been started and stopped yet.");
+        }
+    }
+
+    public static void main(String[] args) {
+        TimeTracker timeTracker = new TimeTracker();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Press ENTER to start the timer.");
+        scanner.nextLine();
+        timeTracker.startTimer();
+
+        System.out.println("Press ENTER to stop the timer.");
+        scanner.nextLine();
+        timeTracker.stopTimer();
+
+        timeTracker.calculateElapsedTime();
     }
 }
