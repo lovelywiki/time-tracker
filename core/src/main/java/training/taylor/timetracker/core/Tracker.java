@@ -47,7 +47,6 @@ public class Tracker {
 
 
 
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Scanner;
@@ -66,15 +65,11 @@ public class TimeTracker {
         System.out.println("Timer stopped.");
     }
 
-    public void calculateElapsedTime() {
+    public Duration getElapsedTime() {
         if (startTime != null && stopTime != null) {
-            Duration duration = Duration.between(startTime, stopTime);
-            long seconds = duration.getSeconds();
-            long minutes = seconds / 60;
-            long remainingSeconds = seconds % 60;
-            System.out.println("Elapsed time: " + minutes + " minutes and " + remainingSeconds + " seconds.");
+            return Duration.between(startTime, stopTime);
         } else {
-            System.out.println("Timer has not been started and stopped yet.");
+            throw new IllegalStateException("Timer has not been started and stopped yet.");
         }
     }
 
@@ -90,6 +85,14 @@ public class TimeTracker {
         scanner.nextLine();
         timeTracker.stopTimer();
 
-        timeTracker.calculateElapsedTime();
+        try {
+            Duration elapsedTime = timeTracker.getElapsedTime();
+            long seconds = elapsedTime.getSeconds();
+            long minutes = seconds / 60;
+            long remainingSeconds = seconds % 60;
+            System.out.println("Elapsed time: " + minutes + " minutes and " + remainingSeconds + " seconds.");
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
