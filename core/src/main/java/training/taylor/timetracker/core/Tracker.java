@@ -45,54 +45,32 @@ public class Tracker {
 
 
 
-
-
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Scanner;
+import javax.swing.*;
 
 public class TimeTracker {
-    private Instant startTime;
-    private Instant stopTime;
-
-    public void startTimer() {
-        startTime = Instant.now();
-        System.out.println("Timer started.");
-    }
-
-    public void stopTimer() {
-        stopTime = Instant.now();
-        System.out.println("Timer stopped.");
-    }
-
-    public Duration getElapsedTime() {
-        if (startTime != null && stopTime != null) {
-            return Duration.between(startTime, stopTime);
-        } else {
-            throw new IllegalStateException("Timer has not been started and stopped yet.");
-        }
-    }
-
     public static void main(String[] args) {
-        TimeTracker timeTracker = new TimeTracker();
-        Scanner scanner = new Scanner(System.in);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
 
-        System.out.println("Press ENTER to start the timer.");
-        scanner.nextLine();
-        timeTracker.startTimer();
+    private static void createAndShowGUI() {
+        // Create the window
+        JFrame frame = new JFrame("Time-Tracker");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        System.out.println("Press ENTER to stop the timer.");
-        scanner.nextLine();
-        timeTracker.stopTimer();
+        // Create a label with the text
+        JLabel label = new JLabel("Time-Tracker");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setVerticalAlignment(JLabel.CENTER);
+        frame.getContentPane().add(label);
 
-        try {
-            Duration elapsedTime = timeTracker.getElapsedTime();
-            long seconds = elapsedTime.getSeconds();
-            long minutes = seconds / 60;
-            long remainingSeconds = seconds % 60;
-            System.out.println("Elapsed time: " + minutes + " minutes and " + remainingSeconds + " seconds.");
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
-        }
+        // Display the window
+        frame.pack();
+        frame.setSize(300, 200);  // Adjust the size as needed
+        frame.setLocationRelativeTo(null); // Center the window
+        frame.setVisible(true);
     }
 }
