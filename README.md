@@ -1,5 +1,5 @@
-# time-tracker
-Java (Maven) application for tracking time on the job
+# HelloWorld
+Java (Maven) application for HelloWorld on the job
 
 Time tracker
 
